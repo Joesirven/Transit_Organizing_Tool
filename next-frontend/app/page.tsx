@@ -1,82 +1,35 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Image from "next/image";
-import { FcGoogle } from "react-icons/fc";
+import { WorkOS } from '@workos-inc/node';
 
-export default function Home() {
+// This example uses Next.js with React Server Components.
+// Because this page is an RSC, the code stays on the server, which allows
+// us to use the WorkOS Node SDK without exposing our API key to the client.
+//
+// If your application is a single page app (SPA), you will need to:
+// - create a form that can POST to an endpoint in your backend
+// - call the `getAuthorizationURL` method in that endpoint
+// - redirect the user to the returned URL
+
+const workos = new WorkOS(process.env.WORKOS_API_KEY);
+
+export default function SignInWithGoogleOAuth({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const googleOAuthUrl = workos.userManagement.getAuthorizationUrl({
+    clientId: process.env.WORKOS_CLIENT_ID || '',
+    provider: 'GoogleOAuth',
+    redirectUri: 'http://localhost:3000/using-your-own-ui/sign-in/google-oauth/callback',
+  });
+
+  const result = JSON.parse(String(searchParams.response ?? '{ "error": null }'));
+
   return (
-    <main className="bg-white h-screen flex items-center justify-center p-10">
-      <div className="grid box-animate w-full h-full grid-cols-1 bg-white md:grid-cols-2">
-        <div className="bg-[#003263] text-white flex items-center justify-center flex-col">
-          <div className="my-4">
-            <h1 className="text-3xl font-semibold">
-              Login
-            </h1>
-            <div className="">
-              <p className="mt-2 text-xs text-slate-400">
-                {" "}
-                We're passing a charter amendment
-                {' '}
-              </p>
-              <p className="mt-2 text-xs text-slate-400">
-                {" "}
-                to build 2002's metrorail plan by 2028.
-              </p>
-            </div>
-
-          </div>
-
-          <form>
-            <Button
-              variant="outline"
-              className="flex mb-4 items-center w-full gap-4 bx-12 rounded-full bg-transparent">
-              <FcGoogle/>
-              <span>Join with Google</span>
-            </Button>
-            <Label htmlFor="email" className="mt-4">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="Email"
-              className="mt-2 mb-4 rounded-full bg-transparent"
-            />
-            <Label htmlFor="phone" className="mt-4">Phone Number</Label>
-            <Input
-              id="phone"
-              type="phone"
-              placeholder="Phone Number"
-              className="mt-2 mb-4 rounded-full bg-transparent"
-            />
-            <Label htmlFor="password" className="mt-4">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Password"
-              className="mt-2 mb-4 rounded-full bg-transparent"
-            />
-
-            <Button
-              type="submit"
-              className="w-full mt-6 rounded-full bg-[#8DC63F] hover:bg-[#0079C2] text-slate-900">
-              Join Now
-            </Button>
-
-          </form>
-        </div>
-
-        <div className="relative hidden md:block">
-          <Image
-            className="object-cover"
-            fill={true}
-            src="/PTP_bg.png"
-            alt="picture of the planned metrorail expansions"
-          >
-
-          </Image>
-        </div>
-      </div>
-
+    <main>
+      <h1>Sign-in</h1>
+      <h2>Google OAuth</h2>
+      <a href={googleOAuthUrl}>Continue with Google</a>
+      <pre>{JSON.stringify(result, null, 2)}</pre>
     </main>
   );
 }
