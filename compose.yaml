@@ -1,0 +1,7 @@
+volumes:
+  db_data:
+    external: true
+services:
+  fastapi:
+    build: api
+    dockerfile: dockerfile
