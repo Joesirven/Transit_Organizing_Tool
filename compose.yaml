@@ -22,19 +22,18 @@ services:
       - "8000:8000"
     volumes:
       - ./api:/app
-  next-frontend:
-    image: node:lts-bullseye
-    command: /bin/bash run.sh
-    working_dir: /app
+  client:
+    build:
+      context: ./client
+      dockerfile: dockerfile.dev
+    depends_on:
+      - fastapi
     volumes:
-      - ./next-frontend:/app
+      - ./client:/app
+    env_file:
+      - ./client/.env.local
     ports:
-      - "3000:3000"
-    environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000
-      HOST_OS: ${HOST_OS}
-      NODE_ENV: development
-      HOST: "0.0.0.0"
+      - 3000:3000
 
   db:
     image: postgres:14.5-bullseye
