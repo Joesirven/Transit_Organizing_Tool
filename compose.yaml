@@ -29,3 +29,16 @@ services:
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
       HOST_OS: ${HOST_OS}
+      NODE_ENV: development
+      HOST: "0.0.0.0"
+
+  db:
+    image: postgres:14.5-bullseye
+    volumes:
+      - db_data:/var/lib/postgresql/db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "15432:5432"
