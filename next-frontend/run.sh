@@ -1,2 +1,2 @@
 bun install
-bun run dev
+bun --bun run dev

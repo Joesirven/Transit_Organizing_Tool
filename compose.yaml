@@ -24,7 +24,7 @@ services:
       - ./api:/app
   next-frontend:
     image: node:lts-bullseye
-    command: bun --bun run dev
+    command: /bin/bash run.sh
     working_dir: /app
     volumes:
       - ./next-frontend:/app
