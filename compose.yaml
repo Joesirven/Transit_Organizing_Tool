@@ -11,6 +11,10 @@ services:
       WAIT_BEFORE: 5
       WAIT_TIMEOUT: 60
       PORT: 8000
+      WORKOS_API_KEY: ${WORKOS_API_KEY}
+      WORKOS_CLIENT_ID: ${WORKOS_CLIENT_ID}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      WORKOS_REDIRECT_URI: ${WORKOS_REDIRECT_URI}
     build:
       context: api
       dockerfile: dockerfile
