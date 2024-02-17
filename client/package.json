@@ -11,6 +11,7 @@
   "dependencies": {
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/themes": "^2.0.3",
     "@workos-inc/node": "^5.1.1",
     "bun-types": "^1.0.26",
     "class-variance-authority": "^0.7.0",
