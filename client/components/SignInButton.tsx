@@ -1,4 +1,4 @@
-import { clearCookie, getAuthorizationUrl, getUser } from "./auth";
+import { clearCookie, getAuthorizationUrl, getUser } from "../app/auth";
 import { Button, Flex } from "@radix-ui/themes";
 
 export async function SignInButton({ large }: { large?: boolean }) {
